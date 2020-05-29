@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>用户注册</title>
+</head>
+<body>
+<h1>用户注册</h1>
+<form id="form-reg">
+<table>
+	<tr>
+		<td>用户名</td>
+		<td><input name="username" /></td>
+	</tr>
+	<tr>
+		<td>密码</td>
+		<td><input type="password" name="password" /></td>
+	</tr>
+	<tr>
+		<td>手机号码</td>
+		<td><input name="cellphone" /></td>
+	</tr>
+	<tr>
+		<td>电子邮箱</td>
+		<td><input name="email" /></td>
+	</tr>
+	<tr>
+		<td colspan="2"><input id="btn-reg" type="button" value="注册" /> 已注册？则直接<a href="login.html">登录</a></td>
+	</tr>
+</table>
+</form>
+<script type="text/javascript" src="jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+$("#btn-reg").click(function() {
+   // alert("测试按钮是否可以点击！");
+	$.ajax({
+        "url":"/users/reg",
+        "data":$("#form-reg").serialize(),
+        "type":"post",
+        "dataType":"json",
+        "success":function(json) {
+            if (json.state == 2000) {
+                // alert("注册成功！");
+                location.href = "login.html";
+            } else {
+                alert(json.message);
+            }
+        }
+    });
+});
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

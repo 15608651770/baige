@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>欢迎登录</title>
+</head>
+<body>
+	<h1>登陆数据：</h1>
+	<div id="log-div">
+		    <tr>
+                <td>登录id：xxxxx</td>
+            </tr>
+			<tr>
+				<td>用户id：xxxxx</td>
+			</tr>
+			<tr>
+				<td>创建时间：xxxxx</td>
+			</tr>
+			<tr>
+				<td>登录ip：xxxxx</td>
+			</tr>
+		</table>
+	</div>
+	<script type="text/javascript" src="jquery-3.4.1.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			showIndex();
+		});
+		
+		function showIndex() {
+		console.log("准备列表……");
+		$("#log-div").empty();
+		console.log("准备列表11……");
+		$.ajax({
+		"url" : "/main/index",
+		"type" : "get",
+		"dataType" : "json",
+		"success" : function(json) {
+			var list = json.data;
+				console.log("count="+ list.length);
+				for (var i = 0; i < list.length; i++) {
+					console.log(list[i].title);
+					var html = '<table>'
+			+ '<tr><td>登录id：#{loginId}</td></tr>'
+			+ '<tr><td>用户id：#{uid}</td></tr>'
+		    + '<tr><td>创建时间：#{modifiedTime}</td></tr>'
+			+ '<tr><td>登录ip：#{loginIp}</td></tr>'
+			+ '</table>';
+
+			html = html.replace(/#{loginId}/g,list[i].loginId);
+	        html = html.replace(/#{uid}/g,list[i].uid);
+	        html = html.replace(/#{modifiedTime}/g,list[i].modifiedTime);
+	        html = html.replace(/#{loginIp}/g,list[i].loginIp);
+
+			$("#log-div").append(html);
+												}
+
+											}
+										})
+							}
+	</script>
+</body>
+</html>

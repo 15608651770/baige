@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.example.Demoweb.mapper.UserMapper">
+
+	<resultMap type="com.example.Demoweb.entity.User"
+		id="UserEntityMap">
+		<id column="uid" property="uid" />
+		<result column="created_user" property="createdUser" />
+		<result column="created_time" property="createdTime" />
+		<result column="modified_user" property="modifiedUser" />
+		<result column="modified_time" property="modifiedTime" />
+	</resultMap>
+	
+	<resultMap type="com.example.Demoweb.entity.User"
+        id="loginLogMap">
+        <id column="login_id" property="loginId" />
+        <result column="login_ip" property="loginIp" />
+        <result column="created_user" property="createdUser" />
+        <result column="created_time" property="createdTime" />
+        <result column="modified_user" property="modifiedUser" />
+        <result column="modified_time" property="modifiedTime" />
+    </resultMap>
+	
+	<!-- 插入用户数据 -->
+	<!-- Integer insert(User user); -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="uid">
+		INSERT
+		INTO user (
+		username, password, email,
+		salt, cellphone, state,
+		created_user, created_time, modified_user, modified_time
+		) VALUES (
+		#{username}, #{password}, #{email},
+		#{salt}, #{cellphone}, #{state},
+		#{createdUser}, #{createdTime}, #{modifiedUser}, #{modifiedTime}
+		)
+	</insert>
+
+	<!-- 根据用户名查询用户数据 -->
+	<!-- User findByUsername(String username) -->
+	<select id="findByUsername" resultMap="UserEntityMap">
+		SELECT * FROM user WHERE username=#{username}
+	</select>
+	
+	<insert id="insertLogin" useGeneratedKeys="true" keyProperty="loginId">
+        INSERT
+        INTO loginLog (
+        uid, login_ip, 
+        created_user, created_time, modified_user, modified_time
+        ) VALUES (
+        #{uid}, #{loginIp}, 
+        #{createdUser}, #{createdTime}, #{modifiedUser}, #{modifiedTime}
+        )
+    </insert>
+    
+    <select id="findByUid" resultMap="loginLogMap">
+        SELECT * FROM loginLog WHERE uid=#{uid}
+    </select>
+
+</mapper>
+

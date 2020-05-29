@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>登录</title>
+</head>
+<body>
+<h1>用户登录</h1>
+<form id="form-login">
+<table>
+    <tr>
+        <td>用户名</td>
+        <td><input name="username" /></td>
+    </tr>
+    <tr>
+        <td>密码</td>
+        <td><input type="password" name="password" /></td>
+    </tr>
+    
+    <tr>
+        <td colspan="2"><input id="btn-login" type="button" value="登录" /> 未注册？则先<a href="reg.html">注册</a></td>
+    </tr>
+</table>
+</form>
+<script type="text/javascript" src="jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+$("#btn-login").click(function() {
+   // alert("测试按钮是否可以点击！");
+    $.ajax({
+        "url":"/users/login",
+        "data":$("#form-login").serialize(),
+        "type":"post",
+        "dataType":"json",
+        "success":function(json) {
+            if (json.state == 2000) {
+                // alert("登录成功！");
+                location.href = "index.html";
+            } else {
+                alert(json.message);
+            }
+        }
+    });
+});
+</script>
+
+</body>
+</html>
